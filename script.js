@@ -61,12 +61,12 @@ keypad.addEventListener("click", function (e) {
     case "num":
       if (Number(totalString.at(-1))) totalString = "";
       if (currString === "0") currString = "";
-      if (currString.length > 23) return;
+      if (currString.length > 35) return;
       currString += btn.dataset.num;
       addToDisplay(currString);
       break;
     case "decimal":
-      if (currString.length >= 23) return;
+      if (currString.length >= 35) return;
       if (currString.includes(".")) return;
       currString += ".";
       addToDisplay(currString);
