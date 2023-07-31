@@ -50,7 +50,7 @@ keypad.addEventListener("click", function (e) {
   };
 
   const addToDisplay = function (string) {
-    if (string.length > 14) display.style.fontSize = "1.8rem";
+    if (string.length > 14) display.style.fontSize = "1.7rem";
     else display.style.fontSize = "3.2rem"; //resize to normal
 
     if (string === "") display.textContent = "0";
