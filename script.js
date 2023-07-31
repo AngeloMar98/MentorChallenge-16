@@ -6,6 +6,9 @@ const darkThemeEnabled = window.matchMedia(
   "(prefers-color-scheme: dark)"
 ).matches;
 
+const display = document.querySelector(".display");
+const keypad = document.querySelector(".keypad");
+
 themeSlider.addEventListener("click", function () {
   if (Number.parseInt(scrollbar.style.marginLeft) === 76) {
     scrollbar.style.marginLeft = "0";
@@ -21,10 +24,7 @@ if (darkThemeEnabled) {
   scrollbar.style.marginLeft = "76%";
 }
 
-const display = document.querySelector(".display");
-
-const keypad = document.querySelector(".keypad");
-
+/* VARIABLES FOR THE CALCULATOR */
 let currString = "";
 let totalString = "";
 
@@ -33,45 +33,69 @@ keypad.addEventListener("click", function (e) {
 
   if (btn.tagName !== "SPAN") return;
 
-  const addSpaceString = function (string) {
+  const addCommaString = function (string) {
+    // this way the commas get added at the start of the string as it shoud
+    if (string.includes(".")) {
+      return addCommaString(string.split(".")[0]) + "." + string.split(".")[1];
+    }
+
     return string
       .split("")
       .reverse()
       .join("")
-      .replace(/\d{3}(?=.)/g, "$& ")
+      .replace(/\d{3}(?=.)/g, "$&,")
       .split("")
       .reverse()
       .join("");
+  };
+
+  const addToDisplay = function (string) {
+    /* HANDLING STRING LENGTHS THAT BREAK DISPLAY */
+
+    if (string.length > 24) return; // block any more input
+    else if (string.length > 14) display.style.fontSize = "1.8rem";
+    //resize display font to get a bit more results in
+    else display.style.fontSize = "3.2rem"; //resize to normal
+
+    if (string === "") display.textContent = "0";
+    else display.textContent = addCommaString(string);
   };
 
   switch (btn.classList[0]) {
     case "num":
       if (Number(totalString.at(-1))) totalString = "";
       currString += btn.dataset.num;
-      display.textContent = addSpaceString(currString);
+      if (currString === "0") currString = "";
+      addToDisplay(currString);
+      break;
     case "decimal":
+      console.log(currString.includes("."));
+      if (currString.includes(".")) return;
+      console.log("got here");
+      currString += ".";
+      addToDisplay(currString);
       break;
     case "operator":
+      if (currString === "" || currString === "0") return;
       totalString += currString + btn.dataset.ope;
       currString = "";
-      display.textContent = "0";
+      addToDisplay(currString);
       break;
     case "del":
       currString = currString.slice(0, -1);
-      display.textContent = addSpaceString(currString);
+      addToDisplay(currString);
       break;
     case "reset":
       totalString = "";
       currString = "";
-      display.textContent = "0";
+      addToDisplay(currString);
       break;
     case "equal":
       totalString += currString;
       currString = "";
+      if (!Number(totalString.at(-1))) totalString = totalString.slice(0, -1);
       totalString = String(eval(totalString));
-      display.textContent = addSpaceString(totalString);
+      addToDisplay(totalString);
       break;
   }
-
-  if (display.textContent === "") display.textContent = "0";
 });
