@@ -1,0 +1,244 @@
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: color 0.02s, background-color 0.02s;
+}
+
+[data-theme="theme1"] {
+  /* backgrounds */
+  --main-bg: hsl(222, 26%, 31%);
+  --keypad-bg: hsl(223, 31%, 20%);
+  --display-bg: hsl(224, 36%, 15%);
+
+  /* del and reset buttons */
+  --del-reset--bg: hsl(225, 21%, 49%);
+  --del-reset-shadow: hsl(224, 28%, 35%);
+  --del-reset-text: hsl(0, 0%, 100%);
+
+  /* equal button */
+  --equal-bg: hsl(6, 63%, 50%);
+  --equal-shadow: hsl(6, 70%, 34%);
+  --equal-text: hsl(0, 0%, 100%);
+
+  /* normal buttons */
+  --btn-bg: hsl(30, 25%, 89%);
+  --btn-shadow: hsl(28, 16%, 65%);
+  --btn-text: hsl(221, 14%, 31%);
+
+  --norm-text: hsl(0, 0%, 100%);
+  --slider: hsl(6, 70%, 34%);
+}
+
+[data-theme="theme2"] {
+  /* backgrounds */
+  --main-bg: hsl(0, 0%, 90%);
+  --keypad-bg: hsl(0, 5%, 81%);
+  --display-bg: hsl(0, 0%, 93%);
+
+  /* del and reset buttons */
+  --del-reset--bg: hsl(185, 42%, 37%);
+  --del-reset-shadow: hsl(185, 58%, 25%);
+  --del-reset-text: hsl(0, 0%, 100%);
+
+  /* equal button */
+  --equal-bg: hsl(25, 98%, 40%);
+  --equal-shadow: hsl(25, 99%, 27%);
+  --equal-text: hsl(0, 0%, 100%);
+
+  /* normal buttons */
+  --btn-bg: hsl(45, 7%, 89%);
+  --btn-shadow: hsl(35, 11%, 61%);
+  --btn-text: hsl(60, 10%, 19%);
+
+  --norm-text: hsl(60, 10%, 19%);
+  --slider: hsl(25, 99%, 27%);
+}
+
+[data-theme="theme3"] {
+  /* backgrounds */
+  --main-bg: hsl(268, 75%, 9%);
+  --keypad-bg: hsl(268, 71%, 12%);
+  --display-bg: hsl(268, 71%, 12%);
+
+  /* del and reset buttons */
+  --del-reset--bg: hsl(281, 89%, 26%);
+  --del-reset-shadow: hsl(285, 91%, 52%);
+  --del-reset-text: hsl(0, 0%, 100%);
+
+  /* equal button */
+  --equal-bg: hsl(176, 100%, 44%);
+  --equal-shadow: hsl(177, 92%, 70%);
+  --equal-text: hsl(198, 20%, 13%);
+
+  /* normal buttons */
+  --btn-bg: hsl(268, 47%, 21%);
+  --btn-shadow: hsl(290, 70%, 36%);
+  --btn-text: hsl(52, 100%, 62%);
+
+  --norm-text: hsl(52, 100%, 62%);
+  --slider: hsl(176, 100%, 44%);
+}
+
+html {
+  font-size: 62.5%;
+}
+
+.main {
+  max-width: 540px;
+  margin: 3rem auto 0 auto;
+}
+
+body {
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  min-height: 100vh;
+  font-size: 3.2rem;
+  background-color: var(--main-bg);
+  color: var(--norm-text);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.8rem;
+  align-items: end;
+}
+
+header > span {
+  margin-bottom: -4px;
+}
+
+.themes {
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: row;
+  gap: 2.6rem;
+  align-items: end;
+}
+
+.themes > span {
+  margin-bottom: 0.4rem;
+}
+
+.theme-switcher {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.theme-nums {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.theme-slider {
+  background-color: var(--keypad-bg);
+  width: 6rem;
+  height: 2rem;
+  border-radius: 10px;
+  padding: 0.4rem;
+}
+
+.scrollbar {
+  cursor: pointer;
+  display: block;
+  background-color: var(--slider);
+  height: 100%;
+  width: 25%;
+  border-radius: 50%;
+  transition: filter 0.15s, margin-left 0.2s ease-in-out;
+}
+
+.scrollbar:hover {
+  filter: brightness(1.3);
+}
+
+.calculator {
+  margin: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.keypad,
+.display {
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.display {
+  background-color: var(--display-bg);
+  text-align: right;
+}
+
+.keypad {
+  background-color: var(--keypad-bg);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 2rem;
+
+  text-transform: uppercase;
+}
+
+.keypad span {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 1.4rem 0;
+  filter: none;
+  transition: box-shadow 0.1s, transform 0.1s, filter 0.2s;
+
+  /* ALIGNING TEXT NO MATTER THE SIZE */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keypad span:hover {
+  filter: brightness(1.3);
+}
+
+.keypad span:active {
+  box-shadow: none;
+  transform: translateY(3px);
+}
+
+.num,
+.operator {
+  background-color: var(--btn-bg);
+  box-shadow: 0px 0.4rem 0 0 var(--btn-shadow);
+  color: var(--btn-text);
+}
+
+.del,
+.reset {
+  background-color: var(--del-reset--bg);
+  box-shadow: 0px 0.4rem 0 0 var(--del-reset-shadow);
+  color: var(--del-reset-text);
+}
+
+.equal {
+  background-color: var(--equal-bg);
+  box-shadow: 0px 0.4rem 0 0 var(--equal-shadow);
+  color: var(--equal-text);
+}
+
+.reset,
+.equal {
+  grid-column: span 2;
+}
+
+.reset,
+.equal,
+.del {
+  font-size: 2.4rem;
+}
+
+[data-ope="*"] {
+  text-transform: lowercase;
+}
