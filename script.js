@@ -50,11 +50,7 @@ keypad.addEventListener("click", function (e) {
   };
 
   const addToDisplay = function (string) {
-    /* HANDLING STRING LENGTHS THAT BREAK DISPLAY */
-
-    if (string.length > 24) return; // block any more input
-    else if (string.length > 14) display.style.fontSize = "1.8rem";
-    //resize display font to get a bit more results in
+    if (string.length > 14) display.style.fontSize = "1.8rem";
     else display.style.fontSize = "3.2rem"; //resize to normal
 
     if (string === "") display.textContent = "0";
@@ -64,19 +60,21 @@ keypad.addEventListener("click", function (e) {
   switch (btn.classList[0]) {
     case "num":
       if (Number(totalString.at(-1))) totalString = "";
-      currString += btn.dataset.num;
       if (currString === "0") currString = "";
+      if (currString.length > 23) return;
+      currString += btn.dataset.num;
       addToDisplay(currString);
       break;
     case "decimal":
-      console.log(currString.includes("."));
+      if (currString.length >= 23) return;
       if (currString.includes(".")) return;
-      console.log("got here");
       currString += ".";
       addToDisplay(currString);
       break;
     case "operator":
-      if (currString === "" || currString === "0") return;
+      if (currString === "0") return;
+      /* ONLY ONE OPERATOR AT THE TIME */
+      if (totalString !== "" && !Number(totalString.at(-1))) return;
       totalString += currString + btn.dataset.ope;
       currString = "";
       addToDisplay(currString);
